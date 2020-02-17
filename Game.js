@@ -6,8 +6,9 @@ class Game {
     }
 
     start() {
-        const names = ["Andy", "Duchess", "Texas", "Lucky"]
+        this.table = new Table();
 
+        const names = ["Andy", "Duchess", "Texas", "Lucky"]
         for (let i = 0; i < 4; i++) {
             const player = new Player({
                 name: names[i],
@@ -17,6 +18,12 @@ class Game {
         }
 
         this.deck = new Deck();
+
+        this.newTurn();
+    }
+
+    newTurn() {
+        // change button, small blind, big blind
         this.dealCards();
     }
 
@@ -27,6 +34,7 @@ class Game {
         });
 
         const cards = this.deck.getRandomCards(5);
+        this.table.dealCards(cards);
     }
 
     updateDom() {

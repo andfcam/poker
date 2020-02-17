@@ -4,8 +4,6 @@ window.onload = () => {
 
 // Deal 5 random cards to the table
 
-// Player has 'button' or dealer property
-
 // Blinds:
 //      Player to left plays small blind
 //      Player to THEIR left plays big blind
