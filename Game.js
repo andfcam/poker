@@ -14,6 +14,10 @@ class Game {
         }
 
         this.deck = new Deck();
+        this.players.forEach(player => {
+            const cards = this.deck.getRandomCards(2);
+            player.dealCards(cards);
+        });
         console.log(this.players, this.deck);
     }
 }
