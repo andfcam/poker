@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 main {
@@ -9,8 +10,8 @@ main {
     width: 100%;
     height: 100vh;
     grid-template-areas: 
-    "player4 player4 player4"
-    "player3 table player2"
+    "player3 player3 player3"
+    "player2 table player4"
     "player1 player1 player1";
     grid-template-rows: 2fr 3fr 2fr;
     grid-template-columns: 2fr 3fr 2fr;
@@ -20,31 +21,49 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .player {
+        border: 1px solid black;
+
+        .details {
+            text-align: center;
+        }
+    }
 }
 
-.player {
-    border: 1px solid black;
-    width: 200px;
-    height: 100px;
-}
+.cards {
+    display: flex;
 
-#player1 {
-    grid-area: player1;
-}
-
-#player2 {
-    grid-area: player2;
-}
-
-#player3 {
-    grid-area: player3;
-}
-
-#player4 {
-    grid-area: player4;
+    .card {
+        width: 62px;
+        height: 88px;
+        border-radius: 4px;
+        background-color: crimson;
+        margin: 4px;
+    }
 }
 
 #table {
     grid-area: table;
     background-color: forestgreen;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#player1 { // Andy - bottom
+    grid-area: player1;
+}
+
+#player2 { // Duchess - left
+    grid-area: player2;
+}
+
+#player3 { // Texas - top
+    grid-area: player3;
+}
+
+#player4 { // Lucky - right
+    grid-area: player4;
 }

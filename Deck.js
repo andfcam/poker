@@ -10,7 +10,11 @@ class Deck {
     create() {
         for (let suit = 0; suit < 4; suit++) {
             for (let number = 0; number < 13; number++) {
-                const card = new Card(this.suits[suit], this.numbers[number]);
+                const card = new Card({
+                    suit: this.suits[suit],
+                    number: this.numbers[number],
+                    value: number
+                });
                 this.cards.push(card);
             }
         }

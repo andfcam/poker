@@ -6,7 +6,7 @@ class Game {
     }
 
     start() {
-        const names = ["Andy", "Texas", "Lucky", "Dame"]
+        const names = ["Andy", "Duchess", "Texas", "Lucky"]
 
         for (let i = 0; i < 4; i++) {
             const player = new Player(names[i]);

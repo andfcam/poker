@@ -3,6 +3,7 @@
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 main {
@@ -10,7 +11,7 @@ main {
   display: grid;
   width: 100%;
   height: 100vh;
-      grid-template-areas: "player4 player4 player4" "player3 table player2" "player1 player1 player1";
+      grid-template-areas: "player3 player3 player3" "player2 table player4" "player1 player1 player1";
   -ms-grid-rows: 2fr 3fr 2fr;
       grid-template-rows: 2fr 3fr 2fr;
   -ms-grid-columns: 2fr 3fr 2fr;
@@ -29,10 +30,43 @@ main {
           align-items: center;
 }
 
-.player {
+.container .player {
   border: 1px solid black;
-  width: 200px;
-  height: 100px;
+}
+
+.container .player .details {
+  text-align: center;
+}
+
+.cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.cards .card {
+  width: 62px;
+  height: 88px;
+  border-radius: 4px;
+  background-color: crimson;
+  margin: 4px;
+}
+
+#table {
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: table;
+  background-color: forestgreen;
+  border-radius: 4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 #player1 {
@@ -44,27 +78,20 @@ main {
 
 #player2 {
   -ms-grid-row: 2;
-  -ms-grid-column: 3;
+  -ms-grid-column: 1;
   grid-area: player2;
 }
 
 #player3 {
-  -ms-grid-row: 2;
+  -ms-grid-row: 1;
   -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
   grid-area: player3;
 }
 
 #player4 {
-  -ms-grid-row: 1;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 3;
-  grid-area: player4;
-}
-
-#table {
   -ms-grid-row: 2;
-  -ms-grid-column: 2;
-  grid-area: table;
-  background-color: forestgreen;
+  -ms-grid-column: 3;
+  grid-area: player4;
 }
 /*# sourceMappingURL=main.css.map */

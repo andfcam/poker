@@ -1,6 +1,8 @@
 class Card {
-    constructor(suit, number) {
-        this.suit = suit;
-        this.number = number;
+    constructor(data) {
+        this.suit = data.suit;
+        this.number = data.number;
+        this.value = data.value;
+        this.visible = false;
     }
 }
