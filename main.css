@@ -50,6 +50,9 @@ main {
   border-radius: 4px;
   background-color: crimson;
   margin: 4px;
+  padding: 4px;
+  text-align: center;
+  font-size: 12px;
 }
 
 #table {

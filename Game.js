@@ -1,7 +1,7 @@
 class Game {
     constructor() {
         this.players = [];
-    
+
         this.start();
     }
 
@@ -9,13 +9,15 @@ class Game {
         const names = ["Andy", "Duchess", "Texas", "Lucky"]
 
         for (let i = 0; i < 4; i++) {
-            const player = new Player(names[i]);
+            const player = new Player({
+                name: names[i],
+                id: i + 1
+            });
             this.players.push(player);
         }
 
         this.deck = new Deck();
         this.dealCards();
-        this.updateDom();
     }
 
     dealCards() {
@@ -23,13 +25,11 @@ class Game {
             const cards = this.deck.getRandomCards(2);
             player.dealCards(cards);
         });
+
+        const cards = this.deck.getRandomCards(5);
     }
 
     updateDom() {
-        this.players.forEach((player, index) => {
-            const selector = `#player${index + 1}`;
-            document.querySelector(`${selector} h2`).innerText = player.name;
-            document.querySelector(`${selector} p`).innerText = player.chips;
-        });
+        this.players.forEach(player => player.updateDom());
     }
 }
