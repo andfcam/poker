@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+main {
+  display: -ms-grid;
+  display: grid;
+  width: 100%;
+  height: 100vh;
+      grid-template-areas: "player4 player4 player4" "player3 table player2" "player1 player1 player1";
+  -ms-grid-rows: 2fr 3fr 2fr;
+      grid-template-rows: 2fr 3fr 2fr;
+  -ms-grid-columns: 2fr 3fr 2fr;
+      grid-template-columns: 2fr 3fr 2fr;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.player {
+  border: 1px solid black;
+  width: 200px;
+  height: 100px;
+}
+
+#player1 {
+  -ms-grid-row: 3;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: player1;
+}
+
+#player2 {
+  -ms-grid-row: 2;
+  -ms-grid-column: 3;
+  grid-area: player2;
+}
+
+#player3 {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: player3;
+}
+
+#player4 {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: player4;
+}
+
+#table {
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: table;
+  background-color: forestgreen;
+}
+/*# sourceMappingURL=main.css.map */
