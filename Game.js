@@ -14,10 +14,22 @@ class Game {
         }
 
         this.deck = new Deck();
+        this.dealCards();
+        this.updateDom();
+    }
+
+    dealCards() {
         this.players.forEach(player => {
             const cards = this.deck.getRandomCards(2);
             player.dealCards(cards);
         });
-        console.log(this.players, this.deck);
+    }
+
+    updateDom() {
+        this.players.forEach((player, index) => {
+            const selector = `#player${index + 1}`;
+            document.querySelector(`${selector} h2`).innerText = player.name;
+            document.querySelector(`${selector} p`).innerText = player.chips;
+        });
     }
 }
