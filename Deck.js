@@ -4,17 +4,16 @@ class Deck {
         this.numbers = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
         this.cards = [];
 
-        this.init();
+        this.create();
     }
 
-    init() {
+    create() {
         for (let suit = 0; suit < 4; suit++) {
             for (let number = 0; number < 13; number++) {
                 const card = new Card(this.suits[suit], this.numbers[number]);
                 this.cards.push(card);
             }
         }
-        console.log(this.shuffle(this.cards));
     }
 
     shuffle(deck) {
@@ -28,4 +27,6 @@ class Deck {
 
         return shuffledDeck;
     }
+
+
 }
