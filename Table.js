@@ -12,7 +12,7 @@ class Table {
     dealCards(cards) {
         this.cards = cards;
         this.cards.forEach((card, i) => {
-            this.domCards[i].innerText = `${card.number} of ${card.suit}`;
+            this.domCards[i].innerHTML = `<span class="${card.color}">${card.number} ${card.suit}</span>`;
         });
     }
 }
