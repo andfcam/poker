@@ -1,5 +1,5 @@
 window.onload = () => {
-    
+    const deck = new Deck();
 }
 
 // Create DOM space for cards
