@@ -2,8 +2,8 @@ class Player {
     constructor(data) {
         this.name = data.name;
         this.id = data.id;
-        this.chips = 1000;
-        this.button = false;
+        this.chips = 500;
+        this.dealer = false;
 
         this.cards = [];
 
@@ -21,6 +21,10 @@ class Player {
     updateDom() {
         this.domName.innerText = this.name;
         this.domChips.innerText = this.chips;
+    }
+
+    bet(chips) {
+        this.chips -= chips;
     }
 
     dealCards(cards) {

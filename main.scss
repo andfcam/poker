@@ -24,12 +24,27 @@ main {
   align-items: center;
 
   .player {
-    border: 1px solid black;
+    position: relative;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 100;
 
     .details {
       text-align: center;
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-weight: 100;
+    }
+
+    .action {
+      position: absolute;
+      //   min-height: 100%;
+      top: 0;
+      left: 100%;
+      margin-left: 10px;
+
+      //   border: 1px solid green;
+      display: flex;
+        
+      button {
+          min-width: 50px;
+      }
     }
   }
 }
@@ -47,12 +62,12 @@ main {
     padding: 8px;
 
     text-align: center;
-    font-family: 'IBM Plex Serif', serif;
+    font-family: "IBM Plex Serif", serif;
     font-size: 40px;
     line-height: 32px;
 
-    .red{
-        color: red;
+    .red {
+      color: red;
     }
   }
 }
@@ -60,7 +75,7 @@ main {
 #table {
   grid-area: table;
   background-color: forestgreen;
-  border-radius: 4px;
+  border-radius: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
