@@ -14,6 +14,18 @@ class Deck {
                 this.cards.push(card);
             }
         }
-        console.log(this.cards);
+        console.log(this.shuffle(this.cards));
+    }
+
+    shuffle(deck) {
+        let shuffledDeck = [];
+
+        while (deck.length > 0) {
+            const randomIndex = Math.floor(Math.random() * deck.length);
+            const card = deck.splice(randomIndex, 1)[0];
+            shuffledDeck.push(card);
+        }
+
+        return shuffledDeck;
     }
 }
