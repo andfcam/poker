@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 main {
@@ -10,19 +10,21 @@ main {
   width: 100%;
   height: 100vh;
   grid-template-areas:
-    "player3 player3 player3"
-    "player2 table player4"
-    "player1 player1 player1";
+    "player3 player3 player3 chat"
+    "player2 table player4 chat"
+    "player1 player1 player1 chat";
   grid-template-rows: 2fr 3fr 2fr;
-  grid-template-columns: 2fr 3fr 2fr;
+  grid-template-columns: 2fr 3fr 2fr 1fr;
 
   background-color: lightgray;
 }
 
 .container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  align-content: center;
 
   .player {
     position: relative;
@@ -31,21 +33,6 @@ main {
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
-
-    .details {
-      display: flex;
-      width: 100%;
-      justify-content: space-around;
-      align-items: center;
-      background-color: white;
-      padding: 4px;
-      margin: 4px;
-      border-radius: 4px;
-
-      .name {
-          font-weight: 800;
-      }
-    }
 
     .timer {
       width: 100%;
@@ -72,8 +59,25 @@ main {
   }
 }
 
+.details {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+  padding: 4px;
+  margin: 4px;
+  border-radius: 4px;
+
+  .name {
+    font-weight: 800;
+  }
+}
+
 .cards {
   display: flex;
+  justify-content: center;
+  align-items: center;
 
   .card {
     width: 62px;
@@ -99,9 +103,18 @@ main {
   grid-area: table;
   background-color: forestgreen;
   border-radius: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+  .details {
+    width: 100px;
+  }
+
+  .cards {
+    flex-basis: 100%;
+  }
+
+  .pot {
+    flex-basis: 100%;
+  }
 }
 
 .chips {
@@ -170,4 +183,9 @@ main {
 #player4 {
   // Lucky - right
   grid-area: player4;
+}
+
+#chat {
+  grid-area: chat;
+  background-color: white;
 }

@@ -3,7 +3,7 @@
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 main {
@@ -11,11 +11,11 @@ main {
   display: grid;
   width: 100%;
   height: 100vh;
-      grid-template-areas: "player3 player3 player3" "player2 table player4" "player1 player1 player1";
+      grid-template-areas: "player3 player3 player3 chat" "player2 table player4 chat" "player1 player1 player1 chat";
   -ms-grid-rows: 2fr 3fr 2fr;
       grid-template-rows: 2fr 3fr 2fr;
-  -ms-grid-columns: 2fr 3fr 2fr;
-      grid-template-columns: 2fr 3fr 2fr;
+  -ms-grid-columns: 2fr 3fr 2fr 1fr;
+      grid-template-columns: 2fr 3fr 2fr 1fr;
   background-color: lightgray;
 }
 
@@ -23,12 +23,16 @@ main {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
 }
 
 .container .player {
@@ -45,26 +49,6 @@ main {
           align-items: center;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
-}
-
-.container .player .details {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-color: white;
-  padding: 4px;
-  margin: 4px;
-  border-radius: 4px;
-}
-
-.container .player .details .name {
-  font-weight: 800;
 }
 
 .container .player .timer {
@@ -89,10 +73,36 @@ main {
   min-width: 50px;
 }
 
+.details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: white;
+  padding: 4px;
+  margin: 4px;
+  border-radius: 4px;
+}
+
+.details .name {
+  font-weight: 800;
+}
+
 .cards {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .cards .card {
@@ -120,15 +130,20 @@ main {
   grid-area: table;
   background-color: forestgreen;
   border-radius: 100px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+}
+
+#table .details {
+  width: 100px;
+}
+
+#table .cards {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+#table .pot {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
 }
 
 .chips {
@@ -204,5 +219,13 @@ main {
   -ms-grid-row: 2;
   -ms-grid-column: 3;
   grid-area: player4;
+}
+
+#chat {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 3;
+  -ms-grid-column: 4;
+  grid-area: chat;
+  background-color: white;
 }
 /*# sourceMappingURL=main.css.map */

@@ -91,10 +91,9 @@ class Player {
                     total -= number * denomination;
                 }
             });
-            console.log(pot);
             if (total !== 0) this.splitChips(total);
         }
-        return pot;        
+        return pot;
     }
 
     splitChip(denomination, number) {

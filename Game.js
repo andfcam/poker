@@ -2,7 +2,7 @@ class Game {
     constructor() {
         this.players = [];
         this.names = ["Andy", "Duchess", "Texas", "Lucky"]
-        this.roles = ["dealer", "smallBlind", "bigBlind", "starter"]; // can add roles "starter" for every player after 3;
+        this.roles = ["dealer", "small-blind", "big-blind", "starter"]; // can add empty roles ""for every player after 4;
         this.blinds = { small: 1, big: 2 };
 
         this.start();
@@ -18,7 +18,7 @@ class Game {
     }
 
     createPlayers() {
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 4; i++) { // remove hard-coded 4 (this.players currently empty)
             const player = new Player({
                 name: this.names[i],
                 role: this.roles[i],
@@ -30,15 +30,23 @@ class Game {
 
     newTurn() {
         this.assignRoles(); // display dealer token
+        this.betBlinds();
         this.dealCards();
     }
 
     assignRoles() {
         const dealer = this.players.find(player => player.role === 'dealer');
         this.players.forEach((player, i) => {
-            const position = (dealer.id + i) % 4;
+            const position = (dealer.id + i) % this.players.length;
             player.role = this.roles[position]
         });
+    }
+
+    betBlinds() {
+        for (const key in this.blinds) {
+            const player = this.players.find(player => player.role === `${key}-blind`);
+            this.table.addToPot(player.bet(this.blinds[key]));
+        }
     }
 
     dealCards() {
@@ -55,7 +63,7 @@ class Game {
     }
 
     nextPlayer() {
-        const next = (this.activePlayer().id + 1) % 4;
+        const next = (this.activePlayer().id + 1) % this.players.length;
         return this.players[next];
     }
 }
