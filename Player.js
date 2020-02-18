@@ -1,9 +1,13 @@
 class Player {
     constructor(data) {
         this.name = data.name;
+        this.role = data.role;
         this.id = data.id;
-        this.chips = 500;
-        this.dealer = false;
+        this.chips = { 500: 2, 200: 5, 50: 6, 20: 6, 10: 8 };
+        this.total = 2500;
+
+        this.timer = null;
+        this.active = false;
 
         this.cards = [];
 
@@ -23,8 +27,11 @@ class Player {
         this.domChips.innerText = this.chips;
     }
 
-    bet(chips) {
-        this.chips -= chips;
+    bet(total) {
+        // work out smallest number of current chips that make up total
+        //      if no suitable amount, split
+
+        // this.chips -= chips;
     }
 
     dealCards(cards) {

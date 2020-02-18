@@ -10,23 +10,26 @@ class Deck {
     create() {
         for (let suit = 0; suit < 4; suit++) {
             for (let number = 0; number < 13; number++) {
-                const card = new Card({
-                    suit: this.suits[suit],
-                    number: this.numbers[number],
-                    value: number
-                });
-                this.cards.push(card);
+                this.newCard(suit, number);
             }
         }
         this.cards = this.shuffle(this.cards);
+    }
+
+    newCard(suit, number) {
+        const card = new Card({
+            suit: this.suits[suit],
+            number: this.numbers[number],
+            value: number
+        });
+        this.cards.push(card);
     }
 
     shuffle(deck) {
         let shuffledDeck = [];
 
         while (deck.length > 0) {
-            const card = this.getRandomCard(deck);
-            shuffledDeck.push(card);
+            shuffledDeck.push(this.getRandomCard(deck));
         }
         return shuffledDeck;
     }
@@ -41,8 +44,7 @@ class Deck {
         const cards = [];
 
         for (let i = 0; i < amount; i++) {
-            const card = this.getRandomCard(this.cards);
-            cards.push(card);
+            cards.push(this.getRandomCard(this.cards));
         }
         return cards;
     }

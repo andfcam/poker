@@ -4,8 +4,6 @@ window.onload = () => {
 
 // Blinds:
 //      Visual representation of button 
-//      Player to left plays small blind
-//      Player to THEIR left plays big blind
 
 // Turn:
 //      Fold, Call, Raise
