@@ -3,6 +3,7 @@
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
 main {
@@ -32,12 +33,46 @@ main {
 
 .container .player {
   position: relative;
-  font-family: "IBM Plex Sans", sans-serif;
-  font-weight: 100;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
 }
 
 .container .player .details {
-  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: white;
+  padding: 4px;
+  margin: 4px;
+  border-radius: 4px;
+}
+
+.container .player .details .name {
+  font-weight: 800;
+}
+
+.container .player .timer {
+  width: 100%;
+  margin: 4px;
+  height: 4px;
+  border: 1px solid forestgreen;
+  background-color: limegreen;
 }
 
 .container .player .action {
@@ -70,9 +105,9 @@ main {
   margin: 4px;
   padding: 8px;
   text-align: center;
-  font-family: "IBM Plex Serif", serif;
+  font-family: "Abril Fatface", serif;
   font-size: 40px;
-  line-height: 32px;
+  line-height: 36px;
 }
 
 .cards .card .red {
@@ -94,6 +129,55 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.chips {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.chips .stack {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 2px;
+}
+
+.chips .stack .chip {
+  width: 12px;
+  height: 3px;
+  margin-top: 1px;
+}
+
+.chips .v500 .chip {
+  background-color: black;
+}
+
+.chips .v200 .chip {
+  background-color: forestgreen;
+}
+
+.chips .v50 .chip {
+  background-color: blue;
+}
+
+.chips .v20 .chip {
+  background-color: red;
+}
+
+.chips .v10 .chip {
+  background-color: white;
 }
 
 #player1 {

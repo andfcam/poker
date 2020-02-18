@@ -3,7 +3,7 @@ class Game {
         this.players = [];
         this.names = ["Andy", "Duchess", "Texas", "Lucky"]
         this.roles = ["dealer", "smallBlind", "bigBlind", "starter"];
-        this.blinds = { small: 1, big: 2 };
+        this.blinds = { small: 10, big: 20 };
 
         this.start();
     }

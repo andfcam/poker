@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
 main {
@@ -25,11 +26,33 @@ main {
 
   .player {
     position: relative;
-    font-family: "IBM Plex Sans", sans-serif;
-    font-weight: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
 
     .details {
-      text-align: center;
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      align-items: center;
+      background-color: white;
+      padding: 4px;
+      margin: 4px;
+      border-radius: 4px;
+
+      .name {
+          font-weight: 800;
+      }
+    }
+
+    .timer {
+      width: 100%;
+      margin: 4px;
+      height: 4px;
+      border: 1px solid forestgreen;
+      background-color: limegreen;
     }
 
     .action {
@@ -41,9 +64,9 @@ main {
 
       //   border: 1px solid green;
       display: flex;
-        
+
       button {
-          min-width: 50px;
+        min-width: 50px;
       }
     }
   }
@@ -62,9 +85,9 @@ main {
     padding: 8px;
 
     text-align: center;
-    font-family: "IBM Plex Serif", serif;
+    font-family: "Abril Fatface", serif;
     font-size: 40px;
-    line-height: 32px;
+    line-height: 36px;
 
     .red {
       color: red;
@@ -79,6 +102,54 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.chips {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    margin: 2px;
+
+    .chip {
+      width: 12px;
+      height: 3px;
+      margin-top: 1px;
+    }
+  }
+
+  .v500 {
+    .chip {
+      background-color: black;
+    }
+  }
+
+  .v200 {
+    .chip {
+      background-color: forestgreen;
+    }
+  }
+
+  .v50 {
+    .chip {
+      background-color: blue;
+    }
+  }
+
+  .v20 {
+    .chip {
+      background-color: red;
+    }
+  }
+
+  .v10 {
+    .chip {
+      background-color: white;
+    }
+  }
 }
 
 #player1 {
