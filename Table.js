@@ -7,6 +7,7 @@ class Table {
 
     fetchDom() {
         this.domCards = document.querySelectorAll('#table .card');
+        this.domTotal = document.querySelector('#table .total');
     }
 
     dealCards(cards) {

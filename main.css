@@ -160,23 +160,23 @@ main {
   margin-top: 1px;
 }
 
-.chips .v500 .chip {
+.chips .v50 .chip {
   background-color: black;
 }
 
-.chips .v200 .chip {
+.chips .v20 .chip {
   background-color: forestgreen;
 }
 
-.chips .v50 .chip {
+.chips .v5 .chip {
   background-color: blue;
 }
 
-.chips .v20 .chip {
+.chips .v2 .chip {
   background-color: red;
 }
 
-.chips .v10 .chip {
+.chips .v1 .chip {
   background-color: white;
 }
 
