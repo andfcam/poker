@@ -20,8 +20,8 @@ class Game {
     createPlayers() {
         for (let i = 0; i < 4; i++) {
             const player = new Player({
-                name: names[i],
-                role: roles[i],
+                name: this.names[i],
+                role: this.roles[i],
                 id: i + 1
             });
             this.players.push(player);
@@ -31,12 +31,15 @@ class Game {
     newTurn() {
         this.assignRoles(); // display dealer token
         this.dealCards();
+        console.log(this.players, this.deck, this.table);
     }
 
     assignRoles() {
         const dealer = this.players.find(player => player.role === 'dealer');
-        const position = (dealer.id + i) % 4;
-        this.players.forEach((player, i) => player.role = this.roles[position]);
+        this.players.forEach((player, i) => {
+            const position = (dealer.id + i) % 4;
+            player.role = this.roles[position]
+        });
     }
 
     dealCards() {
@@ -53,6 +56,7 @@ class Game {
     }
 
     nextPlayer() {
-        return this.players[(this.activePlayer().id + 1) % 4];
+        const next = (this.activePlayer().id + 1) % 4;
+        return this.players[next];
     }
 }

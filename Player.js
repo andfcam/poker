@@ -24,7 +24,8 @@ class Player {
 
     updateDom() {
         this.domName.innerText = this.name;
-        this.domChips.innerText = this.chips;
+        // restructure
+        this.domChips.innerText = this.total;
     }
 
     bet(total) {
