@@ -43,20 +43,20 @@ class Player {
             for (let i = 0; i < this.chips[type]; i++) {
                 chips += `<div class="chip"></div>`;
             }
-            this.domChips.innerHTML += `<div class="stack v${type}">${chips}</div>`;
+            if (this.chips[type] > 0) this.domChips.innerHTML += `<div class="stack v${type}">${chips}</div>`;
         }
     }
 
     displayTotal() {
-        this.total = this.calculateTotal();
+        this.total = this.calculateValue(this.chips);
         this.domTotal.innerText = `$${this.total}`;
     }
 
-    calculateTotal() {
+    calculateValue(chips) {
         let value = 0;
 
-        for (const type in this.chips) {
-            value += type * this.chips[type];
+        for (const type in chips) {
+            value += type * chips[type];
         }
         return value;
     }
@@ -67,20 +67,10 @@ class Player {
             pot = Object.assign({}, this.chips);
             this.removeAllChips();
         } else {
-            pot = this.splitChips(total);
+            pot = this.useAvailableChips(total);
         }
         this.updateDom();
         return pot; // handle if allIn and pot does not equal total - condition before return to return difference /  boolean
-
-        // while total !== 0
-        //      if chip found
-        //          push chip to pot
-        //          remove from player
-        //      if none
-        //          take smallest available chip
-        //          split into next smallest chip
-        //          try again
-        //      subtract from total
     }
 
     removeAllChips() {
@@ -89,11 +79,10 @@ class Player {
         }
     }
 
-    splitChips(total) {
-        const types = Object.keys(this.chips).reverse();
+    useAvailableChips(total) {
         const pot = {};
         while (total !== 0) {
-            types.forEach(denomination => {
+            Object.keys(this.chips).reverse().forEach(denomination => {
                 if (denomination <= total) {
                     const available = this.chips[denomination];
                     const number = Math.min(available, Math.floor(total / denomination));
@@ -102,8 +91,33 @@ class Player {
                     total -= number * denomination;
                 }
             });
+            console.log(pot);
+            if (total !== 0) this.splitChips(total);
         }
-        return pot;
+        return pot;        
+    }
+
+    splitChip(denomination, number) {
+        switch (denomination) {
+            case '50': return { 20: number, 5: 5 * number, 2: 2 * number, 1: number };
+            case '20': return { 5: 3 * number, 2: 2 * number, 1: number };
+            case '5': return { 2: 2 * number, 1: number };
+            case '2': return { 1: 2 * number };
+            default: return;
+        }
+    }
+
+    splitChips(remainder) {
+        Object.keys(this.chips).forEach(denomination => {
+            if (denomination * this.chips[denomination] > remainder) {
+                const number = Math.ceil(remainder / denomination);
+                this.chips[denomination] -= number;
+                const chips = this.splitChip(denomination, number);
+                Object.keys(chips).forEach(denomination => {
+                    this.chips[denomination] += chips[denomination];
+                });
+            }
+        });
     }
 
     dealCards(cards) {

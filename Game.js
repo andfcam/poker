@@ -2,7 +2,7 @@ class Game {
     constructor() {
         this.players = [];
         this.names = ["Andy", "Duchess", "Texas", "Lucky"]
-        this.roles = ["dealer", "smallBlind", "bigBlind", "starter"];
+        this.roles = ["dealer", "smallBlind", "bigBlind", "starter"]; // can add roles "starter" for every player after 3;
         this.blinds = { small: 1, big: 2 };
 
         this.start();
@@ -31,8 +31,6 @@ class Game {
     newTurn() {
         this.assignRoles(); // display dealer token
         this.dealCards();
-
-        console.log(this.players[0].bet(249));
     }
 
     assignRoles() {
