@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./main.css">
     <script src="./app.js"></script>
     <script src="./Game.js"></script>
+    <script src="./Actor.js"></script>
     <script src="./Table.js"></script>
     <script src="./Player.js"></script>
     <script src="./Deck.js"></script>
@@ -31,11 +32,6 @@
                 </div>
                 <div class="pot">
                     <div class="chips"></div>
-                </div>
-                <div class="action">
-                    <button>Call</button>
-                    <button>Raise</button>
-                    <button>Fold</button>
                 </div>
             </div>
         </div>
@@ -102,8 +98,14 @@
                 </div>
             </div>
         </div>
-        <section id="chat">
-            <p>Chat</p>
+        <section id="ui">
+            <h1>Poker</h1>
+            <div id="chat"></div>
+            <div id="buttons">
+                <button>Call</button>
+                <button>Raise</button>
+                <button>Fold</button>
+            </div>
         </section>
     </main>
 </body>

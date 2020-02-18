@@ -1,15 +1,13 @@
-class Player {
+class Player extends Actor {
     constructor(data) {
+        super();
         this.name = data.name;
         this.role = data.role;
         this.id = data.id;
-        this.chips = { 50: 2, 20: 5, 5: 6, 2: 6, 1: 8 };
-        this.total = 250;
-
         this.timer = null;
         this.active = false;
-
-        this.cards = [];
+        this.chips = { 50: 2, 20: 5, 5: 6, 2: 6, 1: 8 };
+        this.total = 250;
 
         this.fetchDom();
     }
@@ -19,46 +17,11 @@ class Player {
         this.domCards = document.querySelectorAll(`#player${this.id} .card`);
         this.domChips = document.querySelector(`#player${this.id} .chips`);
         this.domTotal = document.querySelector(`#player${this.id} .total`);
-
-        this.updateDom();
     }
 
     updateDom() {
         this.domName.innerText = this.name;
-        this.displayCards();
-        this.displayChips();
-        this.displayTotal();
-    }
-
-    displayCards() {
-        this.cards.forEach((card, i) => {
-            this.domCards[i].innerHTML = `<span class="${card.color}">${card.number} ${card.suit}</span>`;
-        });
-    }
-
-    displayChips() {
-        this.domChips.innerHTML = ``;
-        for (const type in this.chips) {
-            let chips = ``;
-            for (let i = 0; i < this.chips[type]; i++) {
-                chips += `<div class="chip"></div>`;
-            }
-            if (this.chips[type] > 0) this.domChips.innerHTML += `<div class="stack v${type}">${chips}</div>`;
-        }
-    }
-
-    displayTotal() {
-        this.total = this.calculateValue(this.chips);
-        this.domTotal.innerText = `$${this.total}`;
-    }
-
-    calculateValue(chips) {
-        let value = 0;
-
-        for (const type in chips) {
-            value += type * chips[type];
-        }
-        return value;
+        super.updateDom();
     }
 
     bet(total) {
@@ -71,12 +34,6 @@ class Player {
         }
         this.updateDom();
         return pot; // handle if allIn and pot does not equal total - condition before return to return difference /  boolean
-    }
-
-    removeAllChips() {
-        for (let key in this.chips) {
-            this.chips[key] = 0;
-        }
     }
 
     useAvailableChips(total) {
@@ -117,10 +74,5 @@ class Player {
                 });
             }
         });
-    }
-
-    dealCards(cards) {
-        this.cards = cards;
-        this.updateDom();
     }
 }

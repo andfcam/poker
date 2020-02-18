@@ -3,7 +3,6 @@
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  font-family: "Inter", sans-serif;
 }
 
 main {
@@ -11,12 +10,21 @@ main {
   display: grid;
   width: 100%;
   height: 100vh;
-      grid-template-areas: "player3 player3 player3 chat" "player2 table player4 chat" "player1 player1 player1 chat";
+      grid-template-areas: "player3 player3 player3 ui" "player2 table player4 ui" "player1 player1 player1 ui";
   -ms-grid-rows: 2fr 3fr 2fr;
       grid-template-rows: 2fr 3fr 2fr;
-  -ms-grid-columns: 2fr 3fr 2fr 1fr;
-      grid-template-columns: 2fr 3fr 2fr 1fr;
+  -ms-grid-columns: 3fr 6fr 3fr 3fr;
+      grid-template-columns: 3fr 6fr 3fr 3fr;
   background-color: lightgray;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+}
+
+h1 {
+  font-family: "Abril Fatface", serif;
+  font-weight: 400;
+  font-size: 40px;
+  margin: 10px;
 }
 
 .container {
@@ -47,8 +55,6 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
 }
 
 .container .player .timer {
@@ -56,21 +62,8 @@ main {
   margin: 4px;
   height: 4px;
   border: 1px solid forestgreen;
-  background-color: limegreen;
-}
-
-.container .player .action {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  margin-left: 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.container .player .action button {
-  min-width: 50px;
+  border-radius: 2px;
+  background-color: lime;
 }
 
 .details {
@@ -78,15 +71,18 @@ main {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   background-color: white;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+          box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
   padding: 4px;
   margin: 4px;
-  border-radius: 4px;
+  border-radius: 20px;
 }
 
 .details .name {
@@ -110,8 +106,8 @@ main {
   height: 88px;
   border-radius: 4px;
   background-color: white;
-  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
-          box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+          box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
   margin: 4px;
   padding: 8px;
   text-align: center;
@@ -221,11 +217,39 @@ main {
   grid-area: player4;
 }
 
-#chat {
+#ui {
   -ms-grid-row: 1;
   -ms-grid-row-span: 3;
   -ms-grid-column: 4;
-  grid-area: chat;
+  grid-area: ui;
   background-color: white;
+  text-align: center;
+}
+
+#ui #chat {
+  height: 70vh;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  overflow-y: scroll;
+}
+
+#ui #buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin: 10px;
+}
+
+#ui #buttons button {
+  background-color: cornflowerblue;
+  min-width: 75px;
+  height: 25px;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 4px;
+  border: none;
 }
 /*# sourceMappingURL=main.css.map */
