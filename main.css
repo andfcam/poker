@@ -96,6 +96,10 @@ h1 {
   font-weight: 800;
 }
 
+.details .total {
+  color: rgba(50, 50, 50, 0.9);
+}
+
 .cards {
   display: -webkit-box;
   display: -ms-flexbox;

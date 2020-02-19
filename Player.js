@@ -4,8 +4,11 @@ class Player extends Actor {
         this.name = data.name;
         this.id = data.id;
         this.role = '';
+        this.computer = false;
         this.active = false;
         this.folded = false;
+
+        this.bet = 0;
 
         this.chips = { 50: 2, 20: 5, 5: 6, 2: 6, 1: 8 };
         this.total = 250;
@@ -28,5 +31,11 @@ class Player extends Actor {
 
     updateTimer(percent) {
         this.domTimer.style.width = `${percent}%`;
+    }
+
+    take(total) {
+        const pot = super.take(total)
+        this.bet += this.calculateValue(pot);
+        return pot;
     }
 }

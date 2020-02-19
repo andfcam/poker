@@ -3,6 +3,8 @@ class Round {
         this.players = data.players;
         this.blinds = data.blinds;
 
+        this.highestBet = 0;
+
         this.timer = null;
 
         this.setup();
@@ -67,7 +69,7 @@ class Round {
                 // player.fold();
                 this.endTurn(player);
             }
-        }, 10); // change to 150
+        }, 30);
     }
 
     endTurn(player) {
@@ -81,6 +83,10 @@ class Round {
     placeBet(player, amount) {
         this.table.addChips(player.take(amount));
         this.table.exchangeExcessChips();
+        if (player.bet > this.highestBet) {
+            this.highestBetter = player;
+            this.highestBet = player.bet;
+        }
         this.updateDom();
     }
 

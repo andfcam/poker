@@ -26,7 +26,6 @@ class Game {
             players: this.solventPlayers(),
             blinds: this.currentBlinds()
         });
-        console.log(round);
     }
 
     solventPlayers() {
