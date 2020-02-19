@@ -127,6 +127,10 @@ h1 {
   color: red;
 }
 
+.cards .card .black {
+  color: black;
+}
+
 .cards .hidden {
   display: block;
   background-color: cornflowerblue;

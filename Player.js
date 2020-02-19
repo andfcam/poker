@@ -2,8 +2,8 @@ class Player extends Actor {
     constructor(data) {
         super();
         this.name = data.name;
-        this.role = data.role;
         this.id = data.id;
+        this.role = '';
         this.active = false;
         this.chips = { 50: 2, 20: 5, 5: 6, 2: 6, 1: 8 };
         this.total = 250;
