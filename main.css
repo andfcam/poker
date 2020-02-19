@@ -145,6 +145,7 @@ h1 {
   grid-area: table;
   background-color: forestgreen;
   border-radius: 100px;
+  padding: 10px;
 }
 
 #table .details {
@@ -185,7 +186,7 @@ h1 {
 }
 
 .chips .stack .chip {
-  width: 12px;
+  width: 21px;
   height: 3px;
   margin-top: 1px;
 }
@@ -195,7 +196,7 @@ h1 {
 }
 
 .chips .v20 .chip {
-  background-color: forestgreen;
+  background-color: limegreen;
 }
 
 .chips .v5 .chip {

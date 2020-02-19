@@ -6,7 +6,6 @@ class Game {
         this.start();
     }
 
-
     start() {
         this.createPlayers();
         this.newRound();

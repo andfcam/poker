@@ -45,7 +45,7 @@ class Round {
     betBlinds() {
         for (const key in this.blinds) {
             const player = this.findPlayer(`${key}Blind`);
-            this.table.addToPot(player.bet(this.blinds[key]));
+            this.placeBet(player, this.blinds[key]);
         }
     }
 
@@ -64,17 +64,29 @@ class Round {
                 player.updateTimer(percent++);
             }
             else {
-                // take function out and call after an action too
-                clearInterval(this.timer);
-                player.active = false;
-                player.updateTimer(0);
-                this.startTurn(this.nextPlayer(player));
+                // player.fold();
+                this.endTurn(player);
             }
-        }, 20); // change to 150
+        }, 10); // change to 150
+    }
+
+    endTurn(player) {
+        this.placeBet(player, 19);
+        clearInterval(this.timer);
+        player.active = false;
+        player.updateTimer(0);
+        this.startTurn(this.nextPlayer(player));
+    }
+
+    placeBet(player, amount) {
+        this.table.addChips(player.take(amount));
+        this.table.exchangeExcessChips();
+        this.updateDom();
     }
 
     updateDom() {
         this.players.forEach(player => player.updateDom());
+        this.table.updateDom();
         // need to display who has button
     }
 
@@ -84,7 +96,6 @@ class Round {
     }
 
     nextPlayer(player) {
-        console.log(player.name, player.id);
         const nextId = player.id % this.players.length; // player.id is naturally one more than this.players[index]
         return this.players[nextId];
     }
