@@ -58,8 +58,22 @@ class Round {
 
     startTurn(player) {
         player.active = true;
-        // listen to events
+        if (player.computer) { 
+            // random timeout to make it feel real
+            this.placeBet(player, 19);
+        }
+        player.domButtons.forEach(button => {
+            button.onclick = () => {
+                const func = button.innerText.toLowerCase();
+                this[func](player); //(slider.value) etc to take in necessary amount if raise
+                this.endTurn(player);
+            }
+        });
 
+        this.startTimer(player);
+    }
+
+    startTimer(player) {
         let percent = 0;
         this.timer = setInterval(() => {
             if (percent < 100) {
@@ -73,7 +87,6 @@ class Round {
     }
 
     endTurn(player) {
-        this.placeBet(player, 19);
         clearInterval(this.timer);
         player.active = false;
         player.updateTimer(0);
@@ -104,5 +117,18 @@ class Round {
     nextPlayer(player) {
         const nextId = player.id % this.players.length; // player.id is naturally one more than this.players[index]
         return this.players[nextId];
+    }
+
+    // want to put these on Player, but will require player to know about table - pass it? leave it?
+    call() {
+        console.log('call');
+    }
+
+    raise() {
+        console.log('raise');
+    }
+
+    fold() {
+        console.log('fold');
     }
 }

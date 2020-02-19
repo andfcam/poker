@@ -1,5 +1,10 @@
 window.onload = () => {
-    const game = new Game(["Andy", "Duchess", "Texas", "Lucky"]);
+    const game = new Game([ 
+        { name: "Andy", computer: false }, 
+        { name: "Duchess", computer: true }, 
+        { name: "Texas", computer: true }, 
+        { name: "Lucky", computer: true }
+    ]);
 }
 
 // Blinds:

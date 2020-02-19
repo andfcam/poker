@@ -2,12 +2,12 @@ class Player extends Actor {
     constructor(data) {
         super();
         this.name = data.name;
+        this.computer = data.computer;
         this.id = data.id;
         this.role = '';
-        this.computer = false;
+
         this.active = false;
         this.folded = false;
-
         this.bet = 0;
 
         this.chips = { 50: 2, 20: 5, 5: 6, 2: 6, 1: 8 };
@@ -22,6 +22,7 @@ class Player extends Actor {
         this.domChips = document.querySelector(`#player${this.id} .chips`);
         this.domTotal = document.querySelector(`#player${this.id} .total`);
         this.domTimer = document.querySelector(`#player${this.id} .bar`);
+        this.domButtons = document.querySelectorAll('button');
     }
 
     updateDom() {

@@ -1,20 +1,20 @@
 class Game {
-    constructor(names) {
+    constructor(data) {
         this.players = [];
-        this.names = names;
 
-        this.start();
+        this.start(data);
     }
 
-    start() {
-        this.createPlayers();
+    start(data) {
+        this.createPlayers(data);
         this.newRound();
     }
 
-    createPlayers() {
-        for (let i = 0; i < this.names.length; i++) {
+    createPlayers(data) {
+        for (let i = 0; i < data.length; i++) {
             const player = new Player({
-                name: this.names[i],
+                name: data[i].name,
+                computer: data[i].computer,
                 id: i + 1
             });
             this.players.push(player);
