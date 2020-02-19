@@ -5,10 +5,10 @@ class Player extends Actor {
         this.id = data.id;
         this.role = '';
         this.active = false;
+        this.folded = false;
+
         this.chips = { 50: 2, 20: 5, 5: 6, 2: 6, 1: 8 };
         this.total = 250;
-
-        this.timer = null;
 
         this.fetchDom();
     }
@@ -26,21 +26,8 @@ class Player extends Actor {
         super.updateDom();
     }
 
-    startTurn() {
-        this.startTimer();
-
-    }
-
-    startTimer() {
-        let width = 0;
-        this.timer = setInterval(() => {
-            if (width < 100) {
-                this.domTimer.style.width = `${width++}%`;
-            } else {
-                // fold cards?
-                clearInterval(this.timer);
-            }
-        }, 150);
+    updateTimer(percent) {
+        this.domTimer.style.width = `${percent}%`;
     }
 
     bet(total) {

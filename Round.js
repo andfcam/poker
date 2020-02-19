@@ -3,20 +3,23 @@ class Round {
         this.players = data.players;
         this.blinds = data.blinds;
 
-        this.play();
+        this.timer = null;
+
+        this.setup();
     }
 
-    play() {
+    setup() {
         this.table = new Table();
         this.deck = new Deck();
 
         this.assignRoles();
         this.betBlinds();
         this.dealCards();
+        this.startTurn(this.findPlayer('starter'));
     }
 
     assignRoles() {
-        const roles = this.availableRoles(); 
+        const roles = this.availableRoles();
         const dealer = this.findPlayer('dealer') || this.players[0];
         this.players.forEach((player, i) => {
             const position = (dealer.id + i) % this.players.length;
@@ -25,10 +28,18 @@ class Round {
     }
 
     availableRoles() {
-        // need to create roles depending on how many players in the round
-        // for two players, only small blind and big blind roles - button with small blind
-        // can add empty roles ""for every player after 4;
-        return ["dealer", "smallBlind", "bigBlind", "starter"];
+        const players = this.players.length;
+        const roles = [];
+        if (players >= 1) roles.push('dealer')
+        if (players >= 2) roles.push('smallBlind');
+        if (players >= 3) roles.push('bigBlind');
+        if (players >= 4) roles.push('starter');
+        if (players >= 5) {
+            for (let i = 5; i <= players; i++) {
+                roles.push('');
+            }
+        }
+        return roles;
     }
 
     betBlinds() {
@@ -43,22 +54,38 @@ class Round {
         this.table.dealCards(this.deck.getRandomCards(5));
     }
 
+    startTurn(player) {
+        player.active = true;
+        // listen to events
+
+        let percent = 0;
+        this.timer = setInterval(() => {
+            if (percent < 100) {
+                player.updateTimer(percent++);
+            }
+            else {
+                // take function out and call after an action too
+                clearInterval(this.timer);
+                player.active = false;
+                player.updateTimer(0);
+                this.startTurn(this.nextPlayer(player));
+            }
+        }, 20); // change to 150
+    }
+
     updateDom() {
         this.players.forEach(player => player.updateDom());
         // need to display who has button
     }
 
     findPlayer(role) {
-        console.log(this.players);
+        // if doesn't exist, need to send back the 'back-up' or rework the roles
         return this.players.find(player => player.role === role);
     }
 
-    activePlayer() {
-        return this.players.find(player => player.active);
-    }
-
-    nextPlayer() {
-        const next = (this.activePlayer().id + 1) % this.players.length;
-        return this.players[next];
+    nextPlayer(player) {
+        console.log(player.name, player.id);
+        const nextId = player.id % this.players.length; // player.id is naturally one more than this.players[index]
+        return this.players[nextId];
     }
 }
