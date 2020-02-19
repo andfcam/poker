@@ -4,10 +4,11 @@ class Player extends Actor {
         this.name = data.name;
         this.role = data.role;
         this.id = data.id;
-        this.timer = null;
         this.active = false;
         this.chips = { 50: 2, 20: 5, 5: 6, 2: 6, 1: 8 };
         this.total = 250;
+
+        this.timer = null;
 
         this.fetchDom();
     }
@@ -17,11 +18,29 @@ class Player extends Actor {
         this.domCards = document.querySelectorAll(`#player${this.id} .card`);
         this.domChips = document.querySelector(`#player${this.id} .chips`);
         this.domTotal = document.querySelector(`#player${this.id} .total`);
+        this.domTimer = document.querySelector(`#player${this.id} .bar`);
     }
 
     updateDom() {
         this.domName.innerText = this.name;
         super.updateDom();
+    }
+
+    startTurn() {
+        this.startTimer();
+
+    }
+
+    startTimer() {
+        let width = 0;
+        this.timer = setInterval(() => {
+            if (width < 100) {
+                this.domTimer.style.width = `${width++}%`;
+            } else {
+                // fold cards?
+                clearInterval(this.timer);
+            }
+        }, 150);
     }
 
     bet(total) {

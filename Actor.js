@@ -14,7 +14,11 @@ class Actor {
 
     displayCards() {
         this.cards.forEach((card, i) => {
-            this.domCards[i].innerHTML = `<span class="${card.color}">${card.number} ${card.suit}</span>`;
+            if (card.visible) {
+                this.domCards[i].innerHTML = `<span class="${card.color}">${card.number} ${card.suit}</span>`;
+            } else {
+                this.domCards[i].innerHTML = `<span class="hidden"></span>`;
+            }
         });
     }
 
@@ -52,6 +56,13 @@ class Actor {
     dealCards(cards) {
         this.cards = cards;
         this.updateDom();
+    }
+
+    flipCards(number) {
+        const toFlip = Math.min(this.cards.length, number);
+        for (let i = 0; i < toFlip; i++) {
+            this.cards[i].visible = true;
+        }
     }
 
     addToPot(chips) {

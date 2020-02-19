@@ -17,6 +17,7 @@ window.onload = () => {
 //      Comp and Player share same class and functions, just prompt.
 //      Player has 15 second timer, comp make decision in random time of 2 - 5s.
 
+// Split-pot can use bet() function to take the allotted amount.
 
 
 
