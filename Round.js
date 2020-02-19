@@ -60,12 +60,13 @@ class Round {
         player.active = true;
         if (player.computer) { 
             // random timeout to make it feel real
-            this.placeBet(player, 19);
+            this.raise(player);
+            // this.endTurn(player); // ending immediately causes the game to crash (multiple players working within interval?)
         }
         player.domButtons.forEach(button => {
             button.onclick = () => {
                 const func = button.innerText.toLowerCase();
-                this[func](player); //(slider.value) etc to take in necessary amount if raise
+                this[func](player);
                 this.endTurn(player);
             }
         });
@@ -80,7 +81,7 @@ class Round {
                 player.updateTimer(percent++);
             }
             else {
-                // player.fold();
+                this.fold(player);
                 this.endTurn(player);
             }
         }, 30);
@@ -120,15 +121,26 @@ class Round {
     }
 
     // want to put these on Player, but will require player to know about table - pass it? leave it?
-    call() {
-        console.log('call');
+    call(player) {
+        const difference = this.highestBet - player.bet;
+        this.placeBet(player, difference);
     }
 
-    raise() {
-        console.log('raise');
+    raise(player) {
+        let raise = this.highestBet - player.bet;
+        if (player.computer) raise += 12;
+        else raise += 8; // += slider.value
+        this.placeBet(player, raise);
     }
 
-    fold() {
+    fold(player) {
         console.log('fold');
     }
+
+    end() {
+        //after ending, back to Game for next round 
+    }
+
+    // could potentially return as line only called after final turn ends?
+
 }

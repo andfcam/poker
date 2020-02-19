@@ -23,6 +23,7 @@ class Player extends Actor {
         this.domTotal = document.querySelector(`#player${this.id} .total`);
         this.domTimer = document.querySelector(`#player${this.id} .bar`);
         this.domButtons = document.querySelectorAll('button');
+        this.domSlider = document.querySelector('slider');
     }
 
     updateDom() {
