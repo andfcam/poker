@@ -20,7 +20,7 @@ class Deck {
         const card = new Card({
             suit: this.suits[suit],
             number: this.numbers[number],
-            value: number
+            value: number + 1
         });
         this.cards.push(card);
     }
