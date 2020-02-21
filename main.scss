@@ -214,6 +214,7 @@ h1 {
     border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
     overflow-y: scroll;
+    margin: 10px 0;
   }
 
   #buttons {
@@ -234,5 +235,10 @@ h1 {
       border-radius: 4px;
       border: none;
     }
+  }
+
+  #slider {
+      display: flex;
+      align-items: center;
   }
 }

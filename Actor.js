@@ -1,8 +1,6 @@
 class Actor {
     constructor() {
         this.chips = { 50: 0, 20: 0, 5: 0, 2: 0, 1: 0 };
-        this.total = 0;
-
         this.cards = [];
     }
 
@@ -33,8 +31,11 @@ class Actor {
         }
     }
 
+    get total() {
+        return this.calculateValue(this.chips);
+    }
+
     displayTotal() {
-        this.total = this.calculateValue(this.chips);
         this.domTotal.innerText = `$${this.total}`;
     }
 
@@ -69,14 +70,17 @@ class Actor {
 
     dealCards(cards) {
         this.cards = cards;
-        this.updateDom();
     }
 
     revealCards(number) {
-        const toReveal = Math.min(this.cards.length, number);
+        const toReveal = Math.min(this.hiddenCards.length, number);
         for (let i = 0; i < toReveal; i++) {
-            this.cards[i].visible = true;
+            this.hiddenCards[0].visible = true;
         }
+    }
+
+    get hiddenCards() {
+        return this.cards.filter(card => card.visible === false);
     }
 
     addChips(chips) {

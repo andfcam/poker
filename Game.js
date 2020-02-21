@@ -23,16 +23,16 @@ class Game {
 
     newRound() {
         const round = new Round({
-            players: this.solventPlayers(),
-            blinds: this.currentBlinds()
+            players: this.solventPlayers,
+            blinds: this.blinds
         });
     }
 
-    solventPlayers() {
+    get solventPlayers() {
         return this.players.filter(player => player.total > 0);
     }
 
-    currentBlinds() {
+    get blinds() {
         // can change blind values later
         return { small: 1, big: 2 };
     }

@@ -11,9 +11,9 @@ class Player extends Actor {
         this.bet = 0;
 
         this.chips = { 50: 2, 20: 5, 5: 6, 2: 6, 1: 8 };
-        this.total = 250;
 
         this.fetchDom();
+        this.listen();
     }
 
     fetchDom() {
@@ -23,7 +23,13 @@ class Player extends Actor {
         this.domTotal = document.querySelector(`#player${this.id} .total`);
         this.domTimer = document.querySelector(`#player${this.id} .bar`);
         this.domButtons = document.querySelectorAll('button');
-        this.domSlider = document.querySelector('slider');
+        this.domSliders = document.querySelectorAll('.raise');
+    }
+
+    listen() {
+        this.domSliders.forEach(element => {
+            element.onchange = () => this.updateSliders(element.value);
+        });
     }
 
     updateDom() {
@@ -33,6 +39,17 @@ class Player extends Actor {
 
     updateTimer(percent) {
         this.domTimer.style.width = `${percent}%`;
+    }
+
+    updateSliders(value) {
+        this.domSliders.forEach(element => {
+            element.value = value;
+        });
+    }
+
+    dealCards(cards) {
+        super.dealCards(cards);
+        if (!this.computer) this.revealCards(2);
     }
 
     take(total) {

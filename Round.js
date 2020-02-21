@@ -6,6 +6,9 @@ class Round {
         this.highestBet = 0;
 
         this.timer = null;
+        this.stage = 'pre-flop';
+        // player to left of dealer bets first every time (except during pre-flop)
+        // pre-flop, betting round, flop, betting round, turn, betting round, river, betting round, showdown
 
         this.setup();
     }
@@ -17,11 +20,11 @@ class Round {
         this.assignRoles();
         this.betBlinds();
         this.dealCards();
-        this.startTurn(this.findPlayer('starter'));
+        this.startTurn(this.leftOfBlinds);
     }
 
     assignRoles() {
-        const roles = this.availableRoles();
+        const roles = this.roles;
         const dealer = this.findPlayer('dealer') || this.players[0];
         this.players.forEach((player, i) => {
             const position = (dealer.id + i) % this.players.length;
@@ -29,15 +32,14 @@ class Round {
         });
     }
 
-    availableRoles() {
+    get roles() {
         const players = this.players.length;
         const roles = [];
         if (players >= 1) roles.push('dealer')
         if (players >= 2) roles.push('smallBlind');
         if (players >= 3) roles.push('bigBlind');
-        if (players >= 4) roles.push('starter');
-        if (players >= 5) {
-            for (let i = 5; i <= players; i++) {
+        if (players >= 4) {
+            for (let i = 4; i <= players; i++) {
                 roles.push('');
             }
         }
@@ -56,22 +58,61 @@ class Round {
         this.table.dealCards(this.deck.getRandomCards(5));
     }
 
-    startTurn(player) {
-        player.active = true;
-        if (player.computer) { 
-            // random timeout to make it feel real
-            this.raise(player);
-            // this.endTurn(player); // ending immediately causes the game to crash (multiple players working within interval?)
+    nextStage() {
+        // does Stage needs its own class?
+        // instead of setting stage explicitly, take nextIndex of stages array?
+        switch (this.stage) {
+            case 'river':
+                this.stage = 'showdown';
+                this.checkHands();
+                return;
+            case 'turn':
+                this.stage = 'river';
+                this.table.revealCards(1);
+                break;
+            case 'flop':
+                this.stage = 'turn';
+                this.table.revealCards(1);
+                break;
+            case 'pre-flop':
+                this.stage = 'flop';
+                this.table.revealCards(3);
+                break;
         }
-        player.domButtons.forEach(button => {
-            button.onclick = () => {
-                const func = button.innerText.toLowerCase();
-                this[func](player);
-                this.endTurn(player);
-            }
-        });
+        this.highestBetter = this.leftOfDealer;
 
+        this.startTurn(this.leftOfDealer);
+    }
+
+    checkHands() {
+
+    }
+
+    startTurn(player) {
+        this.updateDom();
+        player.active = true;
+        if (player.computer) {
+            this.makeDecision(player);
+        } else {
+            player.domButtons.forEach(button => { // needs modification for client/server? - all players share listener
+                button.onclick = () => {
+                    if (player.active) {
+                        const func = button.innerText.toLowerCase();
+                        this[func](player);
+                        this.endTurn(player);
+                    }
+                }
+            });
+        }
         this.startTimer(player);
+    }
+
+    makeDecision(player) {
+        const delay = 1000 * ((Math.random() * 2) + 3); // 2 - 5s
+        setTimeout(() => {
+            this.call(player);
+            this.endTurn(player);
+        }, delay);
     }
 
     startTimer(player) {
@@ -84,14 +125,16 @@ class Round {
                 this.fold(player);
                 this.endTurn(player);
             }
-        }, 30);
+        }, 100); // in ms/100 - 10x desired value in s
     }
 
     endTurn(player) {
         clearInterval(this.timer);
         player.active = false;
         player.updateTimer(0);
-        this.startTurn(this.nextPlayer(player));
+        const nextPlayer = this.nextPlayer(player); // going to be a problem when someone is all-in?
+        if (nextPlayer === this.highestBetter) this.nextStage();
+        else this.startTurn(nextPlayer);
     }
 
     placeBet(player, amount) {
@@ -101,7 +144,6 @@ class Round {
             this.highestBetter = player;
             this.highestBet = player.bet;
         }
-        this.updateDom();
     }
 
     updateDom() {
@@ -116,8 +158,25 @@ class Round {
     }
 
     nextPlayer(player) {
-        const nextId = player.id % this.players.length; // player.id is naturally one more than this.players[index]
+        let nextId = this.getNextId(player);
+        while (this.players[nextId].folded) {
+            nextId = this.getNextId(this.players[nextId]);
+        }
         return this.players[nextId];
+    }
+
+    get leftOfDealer() {
+        const dealer = this.findPlayer('dealer');
+        return this.nextPlayer(dealer);
+    }
+
+    get leftOfBlinds() {
+        const bigBlinder = this.findPlayer('bigBlind');
+        return this.nextPlayer(bigBlinder);
+    }
+
+    getNextId(player) {
+        return player.id % this.players.length;
     }
 
     // want to put these on Player, but will require player to know about table - pass it? leave it?
@@ -128,13 +187,12 @@ class Round {
 
     raise(player) {
         let raise = this.highestBet - player.bet;
-        if (player.computer) raise += 12;
-        else raise += 8; // += slider.value
+        raise += 10; // += slider.value
         this.placeBet(player, raise);
     }
 
     fold(player) {
-        console.log('fold');
+        player.folded = true;
     }
 
     end() {

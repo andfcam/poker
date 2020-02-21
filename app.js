@@ -10,10 +10,8 @@ window.onload = () => {
 // Blinds:
 //      Visual representation of button 
 
-// Turn:
-//      Fold, Call, Raise
-//      Raise slider (with recommended amounts clickable to set slider)
-//      Difference to call or proposed raise displayed below button (see google images)
+// Raise:
+//      Take amount from slider when active
 
 // Keep track of last raise (dealer as default)
 //      Turn switches until all players (inc. big blind) have folded or called
