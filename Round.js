@@ -64,7 +64,7 @@ class Round {
         switch (this.stage) {
             case 'river':
                 this.stage = 'showdown';
-                const winners = new Logic(this.players, this.table);
+                const winners = new Logic(this.eligiblePlayers, this.table);
                 console.log(winners);
                 return;
             case 'turn':
@@ -83,10 +83,6 @@ class Round {
         this.highestBetter = this.leftOfDealer;
 
         this.startTurn(this.leftOfDealer);
-    }
-
-    checkHands() {
-
     }
 
     startTurn(player) {
@@ -151,6 +147,10 @@ class Round {
         this.players.forEach(player => player.updateDom());
         this.table.updateDom();
         // need to display who has button
+    }
+
+    get eligiblePlayers () {
+        return this.players.filter(player => !player.folded);
     }
 
     findPlayer(role) {
