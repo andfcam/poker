@@ -64,7 +64,8 @@ class Round {
         switch (this.stage) {
             case 'river':
                 this.stage = 'showdown';
-                this.checkHands();
+                const winners = new Logic(this.players, this.table);
+                console.log(winners);
                 return;
             case 'turn':
                 this.stage = 'river';
@@ -108,7 +109,7 @@ class Round {
     }
 
     makeDecision(player) {
-        const delay = 1000 * ((Math.random() * 2) + 3); // 2 - 5s
+        const delay = 100 * ((Math.random() * 2) + 3); // 2 - 5s >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MAKE 1000
         setTimeout(() => {
             this.call(player);
             this.endTurn(player);

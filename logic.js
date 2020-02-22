@@ -3,7 +3,9 @@ class Logic {
         this.players = players;
         this.table = table;
 
-        this.evaluate();
+        // keep track of current cards, player to evaluate, remove passing?
+
+        return this.evaluate();
     }
 
     get combinations() {
@@ -20,13 +22,17 @@ class Logic {
         ];
     }
 
-    // [ {ranking: comboRanking, cards: [Card, Card, Card]}, {ranking: comboRanking, cards: [Card, Card, Card]}, ... ]
-
     evaluate() {
+        let hands = [];
         players.forEach(player => {
-            const cardsToCheck = combinedSortedCards(player);
-            const combinations = calculateHandStrength(cardsToCheck);
+            const cardsToCheck = this.combinedSortedCards(player);
+            const hand = this.calculateHand(cardsToCheck);
+            hands.push({
+                player: player,
+                hand: hand
+            });
         });
+        return this.compareHands(hands);
     }
 
     combinedSortedCards(player) {
@@ -40,15 +46,15 @@ class Logic {
         return array.indexOf(combination);
     }
 
-    calculateHandStrength(cards) {
-        let combinations = [];
+    calculateHand(cards) {
+        let hand = [];
         while (cards.length > 2) {
-            combinations.forEach(combination => {
+            this.combinations.forEach(combination => {
                 if (cards.length - combination.required > 2) {
                     const result = this[combination.name](cards);
                     if (result.matched !== null) {
                         cards = result.unmatched;
-                        combinations.push({
+                        hand.push({
                             ranking: this.combinationRanking(combination),
                             cards: result.matched
                         });
@@ -56,22 +62,55 @@ class Logic {
                 }
             });
         }
-        return combinations; // [ {ranking: comboRanking, cards: [Card, Card, Card]}, {ranking: comboRanking, cards: [Card, Card, Card]}, ... ]
+        return hand; // [ {ranking: comboRanking, cards: [Card, Card, Card]}, {ranking: comboRanking, cards: [Card, Card, Card]}, ... ]
+    }
+
+    compareHands(hands) {
+        let winners = [];
+        const bestHand = hands[0].hand;
+        hands.forEach(player => {
+            const hand = player.hand;
+            for (let i = 0; i < Math.max(hand.length, bestHand.length); i++) {
+                if (hand[i].ranking > bestHand[i].ranking) {
+                    bestHand = hand;
+                    winners = [].push(player.player);
+                } else if (hand[i].ranking === bestHand[i].ranking) {
+                    for (let j = 0; j < hand[i].cards.length; j++) {
+                        if (hand[i].cards[j].value > bestHand[i].cards[j].value) {
+                            bestHand = hand;
+                            winners = [].push(player.player);
+                        }
+                    }
+                } else {
+                    return false;
+                }
+            }
+            winners.push(player.player);
+        });
+        return winners;
+    }
+
+    flushFilter(cards) {
+        for (const suit of ["♣︎", "♦︎", "♥︎", "♠︎"]) {
+            const flushCards = cards.filter(card => card.suit === suit);
+            if (flushCards.length >= 5) return flushCards;
+        }
+        return null;
     }
 
     flush(cards) {
-        for (const suit of ["♣︎", "♦︎", "♥︎", "♠︎"]) {
-            const flush = cards.filter(card => card.suit === suit);
-            if (flush.length >= 5) {
-                const orderedCards = this.orderCards(flush);
-                return this.packageResult(orderedCards.splice(0, 5), orderedCards);
-            }
+        const flushCards = this.flushFilter(cards);
+        if (!flushCards === null) {
+            const orderedCards = this.orderCards(flushCards);
+            return this.packageResult(orderedCards.splice(0, 5), orderedCards);
         }
         return this.packageResult(null, null);
     }
 
     straight(cards) {
-        const orderedCards = this.orderCards([...new Set(cards)]);
+        const uniqueCards = this.removeDuplicates(cards); // check output, might not be a set of cards, but values
+        console.log(uniqueCards);
+        const orderedCards = this.orderCards(uniqueCards);
         if (orderedCards.length >= 5) {
             if (orderedCards[0].number === "A") orderedCards = this.duplicateAce(orderedCards);
             for (let i = 4; i < orderedCards.length; i++) {
@@ -90,7 +129,7 @@ class Logic {
     }
 
     // try to handle case where there's six cards in straight, lower five are flush
-    straightFlush(cards) { return this.chain('flush', 'straight', cards); }
+    straightFlush(cards) { return this.chain('flushFilter', 'straight', cards); }
 
     fullHouse(cards) { return this.chain('threeOfAKind', 'pair', cards); }
 
@@ -141,6 +180,8 @@ class Logic {
     cardsEqual(cards) { return cards.every(card => card.value === card[0].value); }
 
     orderCards(cards) { return cards.sort((a, b) => { return b.value - a.value; }); }
+
+    removeDuplicates(cards) { return [...new Set(cards.map(card => card.value))]; }
 
     packageResult(matchedCards, unmatchedCards) {
         return {
