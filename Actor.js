@@ -14,8 +14,10 @@ class Actor {
         this.cards.forEach((card, i) => {
             if (card.visible) {
                 this.domCards[i].innerHTML = `<span class="${card.color}">${card.number} ${card.suit}</span>`;
+                this.domCards[i].classList.add('padded');
             } else {
                 this.domCards[i].innerHTML = `<span class="hidden"></span>`;
+                this.domCards[i].classList.remove('padded');
             }
         });
     }

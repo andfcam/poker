@@ -91,8 +91,10 @@ class Round {
         winners.forEach(winner => {
             winner.addChips(this.table.take(split));
             winner.exchangeExcessChips();
+            winner.revealCards(2);
         });
         this.updateDom();
+
     }
 
     startTurn(player) {
