@@ -74,6 +74,7 @@ h1 {
 }
 
 .details {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -98,6 +99,17 @@ h1 {
 
 .details .total {
   color: rgba(50, 50, 50, 0.9);
+}
+
+.details .button {
+  position: absolute;
+  display: none;
+  left: 102%;
+  background-color: black;
+  color: white;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 20px;
 }
 
 .cards {

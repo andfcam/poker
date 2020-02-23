@@ -21,6 +21,7 @@ class Player extends Actor {
         this.domCards = document.querySelectorAll(`#player${this.id} .card`);
         this.domChips = document.querySelector(`#player${this.id} .chips`);
         this.domTotal = document.querySelector(`#player${this.id} .total`);
+        this.domDealer = document.querySelector(`#player${this.id} .button`);
         this.domTimer = document.querySelector(`#player${this.id} .bar`);
         this.domButtons = document.querySelectorAll('button');
         this.domSliders = document.querySelectorAll('.raise');
@@ -33,6 +34,9 @@ class Player extends Actor {
     }
 
     updateDom() {
+        if (this.role === 'dealer') this.domDealer.style.display = 'block';
+        else this.domDealer.style.display = 'none';
+        
         this.domName.innerText = this.name;
         super.updateDom();
     }

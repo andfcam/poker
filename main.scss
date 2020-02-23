@@ -60,6 +60,7 @@ h1 {
 }
 
 .details {
+  position: relative;
   display: flex;
   width: 100%;
   justify-content: space-evenly;
@@ -75,7 +76,18 @@ h1 {
   }
 
   .total {
-      color: rgba(50, 50, 50, 0.9)
+    color: rgba(50, 50, 50, 0.9);
+  }
+
+  .button {
+    position: absolute;
+    display: none;
+    left: 102%;
+    background-color: black;
+    color: white;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 20px;
   }
 }
 
@@ -238,7 +250,7 @@ h1 {
   }
 
   #slider {
-      display: flex;
-      align-items: center;
+    display: flex;
+    align-items: center;
   }
 }

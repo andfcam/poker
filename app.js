@@ -7,21 +7,19 @@ window.onload = () => {
     ]);
 }
 
-// Blinds:
-//      Visual representation of button 
+// Visual mprovements:
+//      Use poker chip images instead of coloured divs
+//      Re-work UI
+//          Display call and raise amounts on button
+//          Grey out buttons when not useable
+//      Grey out players who have folded
+//      Make it more obvious whose turn it is
+//      Give the pot more room as to not move the cards above
+//      Have stacks >10 display on new stack
+//      Print winners and winning combination on chat box with pot, or print all actions (call, raise, check, fold) etc.
+//      Improve aesthetics
 
-// Raise:
-//      Take amount from slider when active
-
-// Split-pot can use bet() function to take the allotted amount.
-
-
-
-// GAME ENGINE
-// Make it so any client interaction with server has 1 request and 1 return ie. compareHands();
-// Able to separate client and game engine later to host server to make multiplayer
-
-
-
-// README
-// Point out in readme, all mathematics done with chips not numbers. Bets with least number of chips, splits into most efficient groups.
+// Technical improvements:
+//      Use slider amount to increase raise value
+//      Handle ability to split the pot based on amount bet (player who goes all-in can only win set amount of final pot)
+//      (check straight flushes are working, hard to test)

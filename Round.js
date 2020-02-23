@@ -64,8 +64,7 @@ class Round {
         switch (this.stage) {
             case 'river':
                 this.stage = 'showdown';
-                const winners = new Logic(this.eligiblePlayers, this.table);
-                console.log(winners);
+                this.splitPot();
                 return;
             case 'turn':
                 this.stage = 'river';
@@ -83,6 +82,17 @@ class Round {
         this.highestBetter = this.leftOfDealer;
 
         this.startTurn(this.leftOfDealer);
+    }
+
+    splitPot() {
+        const winners = new Logic(this.eligiblePlayers, this.table);
+        const split = Math.floor(this.table.total / winners.length);
+        console.log(winners, split);
+        winners.forEach(winner => {
+            winner.addChips(this.table.take(split));
+            winner.exchangeExcessChips();
+        });
+        this.updateDom();
     }
 
     startTurn(player) {
@@ -149,7 +159,7 @@ class Round {
         // need to display who has button
     }
 
-    get eligiblePlayers () {
+    get eligiblePlayers() {
         return this.players.filter(player => !player.folded);
     }
 
