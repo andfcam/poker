@@ -207,7 +207,7 @@ h1 {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin: 23px 1px 10px 1px;
+  margin: 23px 0px 10px 0px;
 }
 
 .chips .stack .chip {

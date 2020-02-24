@@ -125,23 +125,23 @@ class Logic {
 
     straight(cards) {
         const uniqueCards = this.removeDuplicates(cards);
-        let orderedCards = this.orderCards(uniqueCards);
+        const orderedCards = this.orderCards(uniqueCards);
         if (orderedCards.length >= 5) {
-            const duplicateAceCards = this.duplicateAces(orderedCards);
+            const duplicateAceCards = this.duplicateAce(uniqueCards);
             for (let i = 4; i < duplicateAceCards.length; i++) {
                 if (this.cardsConsecutive(duplicateAceCards.slice(i - 4, i + 1))) {
                     const straight = duplicateAceCards.splice(i - 4, 5);
-                    return this.packageResult(straight, duplicateAceCards);
+                    return this.packageResult(straight, []);
                 }
             }
         }
         return this.packageResult(null, cards);
     }
 
-    duplicateAces(cards) {
-        const aces = cards.filter(card => card.number === "A");
-        aces.forEach(ace => ace.value = 0); // are all aces being set to 0?
-        return cards.concat(aces);
+    duplicateAce(cards) {
+        const aceIndex = cards.findIndex(card => card.number === "A");
+        const ace = cards.slice(aceIndex, aceIndex + 1);
+        return cards.concat(ace);
     }
 
     straightFlush(cards) { return this.chain('flushFilter', 'straight', cards); }
@@ -151,8 +151,6 @@ class Logic {
     twoPair(cards) { return this.chain('pair', 'pair', cards); }
 
     chain(func1, func2, cards) {
-        // This was the problem. When chaining events, destructive methods affect reference to cards.
-        // When one of the two chains were true, the cards were still changed. 
         let tempCards = [...cards];
         const firstCards = this[func1](tempCards);
         if (firstCards.matched !== null) {
@@ -173,12 +171,11 @@ class Logic {
 
     pair(cards) { return this.ofAKind(cards, 2); }
 
-    ofAKind(cards, number) { // 3s not working? could just be aces?
+    ofAKind(cards, number) { 
         const startPosition = number - 1;
         for (let i = startPosition; i < cards.length; i++) {
             if (this.cardsEqual(cards.slice(i - startPosition, i + 1))) {
                 const matchingCards = cards.splice(i - startPosition, number);
-                console.log(matchingCards);
                 return this.packageResult(matchingCards, cards);
             }
         }
@@ -193,17 +190,17 @@ class Logic {
 
     cardsConsecutive(cards) {
         for (let i = 0; i < 4; i++) {
-            if (cards[i].value !== cards[i + 1].value + 1) return false;
+            if (cards[i].value !== cards[i + 1].value % 13 + 1) return false;
         }
         return true;
     }
 
-    cardsEqual(cards) { return cards.every(card => card.value === cards[0].value); }
+    cardsEqual(cards) { return cards.every(card => card.number === cards[0].number); }
 
     orderCards(cards) { return cards.sort((a, b) => { return b.value - a.value; }); }
 
     removeDuplicates(cards) {
-        return cards.filter((card, index, self) => self.findIndex(item => item.value === card.value) === index);
+        return cards.filter((card, index, self) => self.findIndex(item => item.number === card.number) === index);
     }
 
     packageResult(matchedCards, unmatchedCards) {
