@@ -178,6 +178,7 @@ class Logic {
         for (let i = startPosition; i < cards.length; i++) {
             if (this.cardsEqual(cards.slice(i - startPosition, i + 1))) {
                 const matchingCards = cards.splice(i - startPosition, number);
+                console.log(matchingCards);
                 return this.packageResult(matchingCards, cards);
             }
         }

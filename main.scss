@@ -73,6 +73,7 @@ h1 {
 
   .name {
     font-weight: 800;
+    margin-right: 10px;
   }
 
   .total {
@@ -198,44 +199,45 @@ h1 {
   align-items: flex-end;
 
   .stack {
+    position: relative;
     display: flex;
     flex-direction: column;
-    margin: 2px;
+    margin: 23px 1px 10px 1px;
 
     .chip {
-      width: 21px;
-      height: 3px;
-      margin-top: 1px;
+      margin-bottom: -23px;
+      width: 20px;
+      height: 20px;
     }
   }
 
   .v50 {
     .chip {
-      background-color: black;
+      background-image: url("/img/black.png");
     }
   }
 
   .v20 {
     .chip {
-      background-color: limegreen;
+      background-image: url("/img/green.png");
     }
   }
 
   .v5 {
     .chip {
-      background-color: blue;
+      background-image: url("/img/blue.png");
     }
   }
 
   .v2 {
     .chip {
-      background-color: red;
+      background-image: url("/img/red.png");
     }
   }
 
   .v1 {
     .chip {
-      background-color: white;
+      background-image: url("/img/white.png");
     }
   }
 }
@@ -271,6 +273,12 @@ h1 {
     border-bottom: 1px solid lightgray;
     overflow-y: scroll;
     margin: 10px 0;
+  }
+
+  #slider {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px;
   }
 
   #buttons {

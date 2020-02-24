@@ -7,6 +7,7 @@ class Round {
 
         this.timer = null;
         this.stage = 'pre-flop';
+
         // player to left of dealer bets first every time (except during pre-flop)
         // pre-flop, betting round, flop, betting round, turn, betting round, river, betting round, showdown
 
@@ -63,8 +64,8 @@ class Round {
         // instead of setting stage explicitly, take nextIndex of stages array?
         switch (this.stage) {
             case 'river':
-                this.stage = 'showdown';
                 this.splitPot();
+                this.stage = 'showdown';
                 return;
             case 'turn':
                 this.stage = 'river';
@@ -94,7 +95,6 @@ class Round {
             winner.revealCards(2);
         });
         this.updateDom();
-
     }
 
     startTurn(player) {
@@ -117,7 +117,7 @@ class Round {
     }
 
     makeDecision(player) {
-        const delay = 100 * ((Math.random() * 2) + 3); // 2 - 5s >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MAKE 1000
+        const delay = 1000 * ((Math.random() * 2) + 1);
         setTimeout(() => {
             this.call(player);
             this.endTurn(player);
@@ -158,7 +158,6 @@ class Round {
     updateDom() {
         this.players.forEach(player => player.updateDom());
         this.table.updateDom();
-        // need to display who has button
     }
 
     get eligiblePlayers() {
@@ -211,7 +210,4 @@ class Round {
     end() {
         //after ending, back to Game for next round 
     }
-
-    // could potentially return as line only called after final turn ends?
-
 }
