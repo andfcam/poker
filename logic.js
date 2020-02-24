@@ -173,7 +173,7 @@ class Logic {
 
     pair(cards) { return this.ofAKind(cards, 2); }
 
-    ofAKind(cards, number) {
+    ofAKind(cards, number) { // 3s not working? could just be aces?
         const startPosition = number - 1;
         for (let i = startPosition; i < cards.length; i++) {
             if (this.cardsEqual(cards.slice(i - startPosition, i + 1))) {
