@@ -1,6 +1,7 @@
 class Game {
     constructor(data) {
         this.players = [];
+        this.currentRound = null;
 
         this.start(data);
     }
@@ -19,10 +20,14 @@ class Game {
             });
             this.players.push(player);
         }
-    }
+    }    
 
     newRound() {
-        const round = new Round({
+        if (this.currentRound) {
+            console.log('Testing new round.');
+        }
+        this.currentRound = new Round({
+            game: this,
             players: this.solventPlayers,
             blinds: this.blinds
         });

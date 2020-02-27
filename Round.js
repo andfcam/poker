@@ -1,5 +1,6 @@
 class Round {
     constructor(data) {
+        this.game = data.game;
         this.players = data.players;
         this.blinds = data.blinds;
 
@@ -7,9 +8,6 @@ class Round {
 
         this.timer = null;
         this.stage = 'pre-flop';
-
-        // player to left of dealer bets first every time (except during pre-flop)
-        // pre-flop, betting round, flop, betting round, turn, betting round, river, betting round, showdown
 
         this.setup();
     }
@@ -27,9 +25,16 @@ class Round {
     assignRoles() {
         const roles = this.roles;
         const dealer = this.findPlayer('dealer') || this.players[0];
+        // start the assignment at pos = (dealer.id) or 0; 
+        // player[0] = roles[0];
+        // player[1] = roles[1];
+
+        //player[]
         this.players.forEach((player, i) => {
             const position = (dealer.id + i) % this.players.length;
             player.role = roles[position];
+            console.log(roles);
+            console.log(player, player.role);
         });
     }
 
@@ -64,8 +69,9 @@ class Round {
         // instead of setting stage explicitly, take nextIndex of stages array?
         switch (this.stage) {
             case 'river':
-                this.splitPot();
                 this.stage = 'showdown';
+                this.splitPot();
+                this.endRound();
                 return;
             case 'turn':
                 this.stage = 'river';
@@ -88,7 +94,6 @@ class Round {
     splitPot() {
         const winners = new Logic(this.eligiblePlayers, this.table);
         const split = Math.floor(this.table.total / winners.length);
-        console.log(winners, split);
         winners.forEach(winner => {
             winner.addChips(this.table.take(split));
             winner.exchangeExcessChips();
@@ -98,6 +103,7 @@ class Round {
     }
 
     startTurn(player) {
+        console.log(this.highestBetter)
         this.updateDom();
         player.active = true;
         if (player.computer) {
@@ -117,7 +123,7 @@ class Round {
     }
 
     makeDecision(player) {
-        const delay = 1000 * ((Math.random() * 2) + 1);
+        const delay = 100 * ((Math.random() * 2) + 1); // change to 1000
         setTimeout(() => {
             this.call(player);
             this.endTurn(player);
@@ -142,8 +148,12 @@ class Round {
         player.active = false;
         player.updateTimer(0);
         const nextPlayer = this.nextPlayer(player); // going to be a problem when someone is all-in?
-        if (nextPlayer === this.highestBetter) this.nextStage();
-        else this.startTurn(nextPlayer);
+        if (nextPlayer === this.highestBetter) {
+            this.nextStage();
+        } else {
+            if (player.folded) this.highestBetter = nextPlayer;
+            this.startTurn(nextPlayer);
+        }
     }
 
     placeBet(player, amount) {
@@ -204,10 +214,14 @@ class Round {
     }
 
     fold(player) {
-        player.folded = true;
+        player.folded = true; 
     }
 
-    end() {
-        //after ending, back to Game for next round 
+    endRound() {
+        // could pass the table remainder to newRound
+        for (const player of this.players) {
+            player.folded = false;
+        }
+        this.game.newRound(); // set timeout
     }
 }
