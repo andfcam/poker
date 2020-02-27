@@ -25,16 +25,9 @@ class Round {
     assignRoles() {
         const roles = this.roles;
         const dealer = this.findPlayer('dealer') || this.players[0];
-        // start the assignment at pos = (dealer.id) or 0; 
-        // player[0] = roles[0];
-        // player[1] = roles[1];
-
-        //player[]
         this.players.forEach((player, i) => {
-            const position = (dealer.id + i) % this.players.length;
+            const position = (this.players.length - dealer.id + i) % this.players.length;
             player.role = roles[position];
-            console.log(roles);
-            console.log(player, player.role);
         });
     }
 
@@ -103,7 +96,6 @@ class Round {
     }
 
     startTurn(player) {
-        console.log(this.highestBetter)
         this.updateDom();
         player.active = true;
         if (player.computer) {
@@ -123,7 +115,7 @@ class Round {
     }
 
     makeDecision(player) {
-        const delay = 100 * ((Math.random() * 2) + 1); // change to 1000
+        const delay = 1000 * ((Math.random() * 2) + 1); 
         setTimeout(() => {
             this.call(player);
             this.endTurn(player);

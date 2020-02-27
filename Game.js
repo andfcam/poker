@@ -23,9 +23,6 @@ class Game {
     }    
 
     newRound() {
-        if (this.currentRound) {
-            console.log('Testing new round.');
-        }
         this.currentRound = new Round({
             game: this,
             players: this.solventPlayers,
