@@ -143,7 +143,7 @@ class Round {
         if (nextPlayer === this.highestBetter) {
             this.nextStage();
         } else {
-            if (player.folded) this.highestBetter = nextPlayer;
+            if (player === this.highestBetter && player.folded) this.highestBetter = nextPlayer;
             this.startTurn(nextPlayer);
         }
     }
@@ -158,7 +158,10 @@ class Round {
     }
 
     updateDom() {
-        this.players.forEach(player => player.updateDom());
+        this.players.forEach(player => {
+            player.updateCallAmount(this.highestBet - player.bet);
+            player.updateDom();
+        });
         this.table.updateDom();
     }
 
@@ -191,6 +194,10 @@ class Round {
 
     getNextId(player) {
         return player.id % this.players.length;
+    }
+
+    check(player) {
+        this.call(player);
     }
 
     // want to put these on Player, but will require player to know about table - pass it? leave it?

@@ -8,6 +8,7 @@ class Player extends Actor {
 
         this.active = false;
         this.folded = false;
+
         this.bet = 0;
 
         this.chips = { 50: 2, 20: 5, 5: 6, 2: 6, 1: 8 };
@@ -25,6 +26,9 @@ class Player extends Actor {
         this.domTimer = document.querySelector(`#player${this.id} .bar`);
         this.domButtons = document.querySelectorAll('button');
         this.domSliders = document.querySelectorAll('.raise');
+        this.domCall = document.querySelector('#call');
+        this.domCallAmount = document.querySelector('#call-amount');
+        this.domRaiseAmount = document.querySelector('#raise-amount');
     }
 
     listen() {
@@ -34,10 +38,16 @@ class Player extends Actor {
     }
 
     updateDom() {
-        if (this.role === 'dealer') this.domDealer.style.display = 'block';
-        else this.domDealer.style.display = 'none';
-        
         this.domName.innerText = this.name;
+
+        this.role === 'dealer'
+            ? this.domDealer.style.display = 'block'
+            : this.domDealer.style.display = 'none';
+
+        // if (this.folded) this.domCards[0].style.backgroundColor = 'lightgray';
+        
+        //this.updateRaiseAmount();
+
         super.updateDom();
     }
 
@@ -49,7 +59,20 @@ class Player extends Actor {
         this.domSliders.forEach(element => {
             element.value = value;
         });
+        this.updateRaiseAmount();
     }
+
+    updateCallAmount(value) {
+        if (value === 0) {
+            this.domCall.innerText = 'Check';
+            this.domCallAmount.innerText = '';
+        } else {
+            this.domCall.innerText = 'Call';
+            this.domCallAmount.innerText = value;
+        }
+    }
+
+    updateRaiseAmount() { this.domRaiseAmount.innerText = this.domSliders[0].value + this.domCallAmount.innerText; }
 
     dealCards(cards) {
         super.dealCards(cards);
