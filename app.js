@@ -7,7 +7,7 @@ window.onload = () => {
     ]);
 }
 
-// Visual mprovements:
+// Visual improvements:
 //      Use poker chip images instead of coloured divs
 //      Re-work UI
 //          Display call and raise amounts on button

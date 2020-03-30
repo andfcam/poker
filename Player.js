@@ -40,15 +40,17 @@ class Player extends Actor {
     updateDom() {
         this.domName.innerText = this.name;
 
+        this.updateDealerChip();
+        this.updateCards()
+        this.updateRaiseAmount();
+
+        super.updateDom();
+    }
+
+    updateDealerChip() {
         this.role === 'dealer'
             ? this.domDealer.style.display = 'block'
             : this.domDealer.style.display = 'none';
-
-        // if (this.folded) this.domCards[0].style.backgroundColor = 'lightgray';
-        
-        //this.updateRaiseAmount();
-
-        super.updateDom();
     }
 
     updateTimer(percent) {
@@ -68,15 +70,21 @@ class Player extends Actor {
             this.domCallAmount.innerText = '';
         } else {
             this.domCall.innerText = 'Call';
-            this.domCallAmount.innerText = value;
+            this.domCallAmount.innerText = `(${value})`;
         }
     }
 
-    updateRaiseAmount() { this.domRaiseAmount.innerText = this.domSliders[0].value + this.domCallAmount.innerText; }
+    updateRaiseAmount() { this.domRaiseAmount.innerText = `(${this.domSliders[0].value + this.domCallAmount.innerText})`; }
 
     dealCards(cards) {
         super.dealCards(cards);
         if (!this.computer) this.revealCards(2);
+    }
+
+    updateCards() {
+        this.folded 
+        ? this.domCards.forEach(card => card.style.backgroundColor = 'lightgray')
+        : this.domCards.forEach(card => card.style.backgroundColor = 'white');
     }
 
     take(total) {

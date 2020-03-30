@@ -104,8 +104,7 @@ class Round {
             player.domButtons.forEach(button => { // needs modification for client/server? - all players share listener
                 button.onclick = () => {
                     if (player.active) {
-                        const func = button.innerText.toLowerCase();
-                        this[func](player);
+                        this[button.value](player);
                         this.endTurn(player);
                     }
                 }

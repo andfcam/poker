@@ -291,13 +291,18 @@ h1 {
     button {
       background-color: cornflowerblue;
       min-width: 75px;
-      height: 25px;
+      height: 50px;
       font-family: "Inter", sans-serif;
       font-size: 16px;
       font-weight: 400;
 
       border-radius: 4px;
       border: none;
+      outline: none;
+
+      span {
+          font-size: 10px;
+      }
     }
   }
 
