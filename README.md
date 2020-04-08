@@ -7,6 +7,7 @@ The three computer components call whatever the player proposes.
 Created in week 5 as a game challenge.
 
 Planned features:
-Chat and commentary system.
-Multiplayer with Node.js, Socket.io
-Raise slider
+- Chat and commentary system.
+- Multiplayer with Node.js, Socket.io
+- Raise slider
+- Opponent AI
